@@ -26,8 +26,9 @@ svm_model:
  
 model:
   model_dir: models/model.joblib
-  params_dir : models/params.json
-  score_dir : models/score.json
+  params_dir : reports/params.json
+  score_dir : reports/score.json
+  vectorizer_dir: models/vectorizer.joblib
 
 
 

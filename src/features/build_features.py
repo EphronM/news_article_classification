@@ -1,6 +1,7 @@
 import argparse
 import pandas as pd 
 from src.config import read_yaml
+import joblib
 import nltk
 nltk.download('vader_lexicon')
 nltk.download('stopwords')
@@ -30,7 +31,8 @@ def data_processor(data_path):
 
   transformed_data = pd.DataFrame(features)
   transformed_data['labels'] = labels
-  return transformed_data
+
+  return transformed_data, tfidf
 
 
 def word_processor(obj):
@@ -50,9 +52,12 @@ def transform_data(config_path):
   raw_data_path = config['raw_data_config']['raw_data_csv']
   process_config = config['processed_data_config']
   new_data_path = process_config['processed_data_csv']
+  vectorizer_path = config['model']['vectorizer_dir']
     
-  processed_data = data_processor(data_path= raw_data_path)
+  processed_data, vectorizer = data_processor(data_path= raw_data_path)
+
   processed_data.to_csv(new_data_path, sep=",", index=False, encoding="utf-8")
+  joblib.dump(vectorizer, vectorizer_path)
 
 
 

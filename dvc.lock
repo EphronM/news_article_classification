@@ -20,8 +20,8 @@ stages:
       md5: 97e496bd04df9a513f8d22793b7fc0f1
       size: 3351206
     - path: src/features/build_features.py
-      md5: 11d6f2d0f79960b4820a780e5ddfa3e5
-      size: 1938
+      md5: c6c594a678e54c6fc9c32ce3fb869cc5
+      size: 2075
     outs:
     - path: data/processed/processed_data.csv
       md5: e1119a547e2432ca933ddba610f39c31
@@ -58,7 +58,7 @@ stages:
       params.yaml:
         svm_model.C: 10
         svm_model.gamma: 0.1
-        svm_model.kernel: linear
+        svm_model.kernel: rbf
   log_production_model:
     cmd: python src/models/prod_model_selection.py --config=params.yaml
     deps:
@@ -69,8 +69,8 @@ stages:
       params.yaml:
         svm_model.C: 10
         svm_model.gamma: 0.1
-        svm_model.kernel: linear
+        svm_model.kernel: rbf
     outs:
     - path: models/model.joblib
-      md5: a1c45079fc22ba227cc5306db45da9d5
-      size: 69621816
+      md5: 85188c638ac008a52c939b55d54a1f97
+      size: 69468592
