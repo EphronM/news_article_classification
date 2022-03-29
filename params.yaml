@@ -24,8 +24,11 @@ svm_model:
   gamma: 0.1
   C: 10
  
+model:
+  model_dir: models/model.joblib
+  params_dir : models/params.json
+  score_dir : models/score.json
 
-model_dir: models/model.joblib
 
 
 model_webapp_dir: webapp/model_webapp_dir/model.joblib

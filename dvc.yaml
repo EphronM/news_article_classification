@@ -34,3 +34,14 @@ stages:
     - svm_model.kernel
     - svm_model.gamma
     - svm_model.C
+
+  log_production_model:
+    cmd: python src/models/prod_model_selection.py --config=params.yaml
+    deps:
+    - src/models/prod_model_selection.py
+    params:
+    - svm_model.kernel
+    - svm_model.gamma
+    - svm_model.C
+    outs:
+    - models/model.joblib

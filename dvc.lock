@@ -7,8 +7,8 @@ stages:
       md5: 97e496bd04df9a513f8d22793b7fc0f1
       size: 3351206
     - path: src/data/load_data.py
-      md5: a9a4839e5b01b5ca95ba491b102c3a41
-      size: 834
+      md5: f7e5feba26c9876065639688f93bb5b2
+      size: 692
     outs:
     - path: data/raw/train.csv
       md5: 97e496bd04df9a513f8d22793b7fc0f1
@@ -58,4 +58,19 @@ stages:
       params.yaml:
         svm_model.C: 10
         svm_model.gamma: 0.1
-        svm_model.kernel: rbf
+        svm_model.kernel: linear
+  log_production_model:
+    cmd: python src/models/prod_model_selection.py --config=params.yaml
+    deps:
+    - path: src/models/prod_model_selection.py
+      md5: b75101a934df9afc3f5ec7710c9a123b
+      size: 2533
+    params:
+      params.yaml:
+        svm_model.C: 10
+        svm_model.gamma: 0.1
+        svm_model.kernel: linear
+    outs:
+    - path: models/model.joblib
+      md5: a1c45079fc22ba227cc5306db45da9d5
+      size: 69621816

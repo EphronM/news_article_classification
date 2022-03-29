@@ -4,12 +4,6 @@ import pandas as pd
 from src.config import read_yaml
 
 
-
-def read_params(config_path):
-    with open(config_path) as yaml_file:
-        config = yaml.safe_load(yaml_file)
-    return config
-
 def load_data(data_path):
     df = pd.read_csv(data_path, encoding='utf-8')
     return df
@@ -22,7 +16,6 @@ def load_raw_data(config_path):
     
     df = load_data(external_data_path)
     df.to_csv(raw_data_path,index=False)
-
 
 
 
