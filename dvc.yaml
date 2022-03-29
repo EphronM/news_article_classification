@@ -23,3 +23,14 @@ stages:
     outs:
     - data/processed/news_train.csv
     - data/processed/news_test.csv
+
+  model_train:
+    cmd: python src/models/train_model.py --config=params.yaml
+    deps:
+    - data/processed/news_train.csv
+    - data/processed/news_test.csv
+    - src/models/train_model.py
+    params:
+    - svm_model.kernel
+    - svm_model.gamma
+    - svm_model.C

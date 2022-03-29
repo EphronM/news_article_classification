@@ -42,3 +42,20 @@ stages:
     - path: data/processed/news_train.csv
       md5: f7071d652d8ce9714d2e190655d1f2d3
       size: 48441472
+  model_train:
+    cmd: python src/models/train_model.py --config=params.yaml
+    deps:
+    - path: data/processed/news_test.csv
+      md5: 3270dbc351824cef94740c6039262dcd
+      size: 12137763
+    - path: data/processed/news_train.csv
+      md5: f7071d652d8ce9714d2e190655d1f2d3
+      size: 48441472
+    - path: src/models/train_model.py
+      md5: 44ac14816951ccdf7754529c00c7c780
+      size: 3195
+    params:
+      params.yaml:
+        svm_model.C: 10
+        svm_model.gamma: 0.1
+        svm_model.kernel: rbf
