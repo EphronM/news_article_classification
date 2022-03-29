@@ -1,0 +1,25 @@
+stages:
+  raw_dataset_creation:
+    cmd: python src/data/load_data.py --config=params.yaml
+    deps:
+    - src/data/load_data.py
+    - data/external/train.csv
+    outs:
+    - data/raw/train.csv
+
+  transform_data:
+    cmd: python src/features/build_features.py --config=params.yaml
+    deps:
+    - src/features/build_features.py
+    - data/raw/train.csv
+    outs:
+    - data/processed/processed_data.csv
+  
+  split_data:
+    cmd: python src/data/split_data.py --config=params.yaml
+    deps:
+    - src/data/split_data.py
+    - data/processed/processed_data.csv
+    outs:
+    - data/processed/news_train.csv
+    - data/processed/news_test.csv

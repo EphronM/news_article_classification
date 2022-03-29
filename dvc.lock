@@ -1,0 +1,44 @@
+schema: '2.0'
+stages:
+  raw_dataset_creation:
+    cmd: python src/data/load_data.py --config=params.yaml
+    deps:
+    - path: data/external/train.csv
+      md5: 97e496bd04df9a513f8d22793b7fc0f1
+      size: 3351206
+    - path: src/data/load_data.py
+      md5: a9a4839e5b01b5ca95ba491b102c3a41
+      size: 834
+    outs:
+    - path: data/raw/train.csv
+      md5: 97e496bd04df9a513f8d22793b7fc0f1
+      size: 3351206
+  transform_data:
+    cmd: python src/features/build_features.py --config=params.yaml
+    deps:
+    - path: data/raw/train.csv
+      md5: 97e496bd04df9a513f8d22793b7fc0f1
+      size: 3351206
+    - path: src/features/build_features.py
+      md5: 11d6f2d0f79960b4820a780e5ddfa3e5
+      size: 1938
+    outs:
+    - path: data/processed/processed_data.csv
+      md5: e1119a547e2432ca933ddba610f39c31
+      size: 60798178
+  split_data:
+    cmd: python src/data/split_data.py --config=params.yaml
+    deps:
+    - path: data/processed/processed_data.csv
+      md5: e1119a547e2432ca933ddba610f39c31
+      size: 60798178
+    - path: src/data/split_data.py
+      md5: 239eefe2bd8c1904298c84adda02f018
+      size: 1232
+    outs:
+    - path: data/processed/news_test.csv
+      md5: 3270dbc351824cef94740c6039262dcd
+      size: 12137763
+    - path: data/processed/news_train.csv
+      md5: f7071d652d8ce9714d2e190655d1f2d3
+      size: 48441472
