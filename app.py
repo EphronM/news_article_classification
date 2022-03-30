@@ -23,14 +23,20 @@ def index():
         try:
             if request.form:
                 data_req = dict(request.form)
+                print('stage 01')
                 response = prediction.form_response(data_req)
                 return render_template('index.html', response = response)
             elif request.json:
                 response = prediction.api_response(request.json)
-  
                 return jsonify(response)
-        except:
-            pass
+
+        except Exception as e:
+            print(e)
+            error = {'error' :e}
+            return render_template('404.html', error=error)
+    
+    else:
+        return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

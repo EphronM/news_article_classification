@@ -49,3 +49,17 @@ def get_maping(json_path = mapping_path):
     with open(json_path) as json_file:
         map = json.load(json_file)
     return map
+
+
+
+def form_response(dict_request):
+  try:
+    print("stage 02")
+    data = dict_request['text']
+    #data = [list(map(float, data))]
+    print("stage 03")
+    print('-----------------------')
+    response = news_prediction([data])
+    return response[0]
+  except:
+    pass
