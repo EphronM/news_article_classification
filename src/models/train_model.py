@@ -64,9 +64,9 @@ def train_and_evaluate(config_path):
 
     with mlflow.start_run(run_name=mlflow_config["run_name"]) as mlops_run:
         model = svm.SVC(kernel=kernel, gamma=gamma, C=C)
-        model.fit(train_x, train_y)
-        y_pred = model.predict(test_x)
-        accuracy,precision,recall,f1score = accuracymeasures(test_y,y_pred,'weighted')
+        model.fit(train_x.values, train_y.values)
+        y_pred = model.predict(test_x.values)
+        accuracy,precision,recall,f1score = accuracymeasures(test_y.values,y_pred,'weighted')
 
         mlflow.log_param("kernel",kernel)
         mlflow.log_param("gamma", gamma)
@@ -96,3 +96,6 @@ if __name__=="__main__":
     args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
     train_and_evaluate(config_path=parsed_args.config)
+
+
+#repro

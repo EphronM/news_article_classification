@@ -9,7 +9,7 @@ from prediction_service import prediction
 
 
 
-webapp_root = "webapp"
+#webapp_root = "webapp"
 
 
 app = Flask(__name__)

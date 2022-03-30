@@ -1,7 +1,7 @@
 import os
 import argparse
 import pandas as pd
-from load_data import read_params
+from src.config import read_yaml
 from sklearn.model_selection import train_test_split
 
 def split_data(df,train_data_path,test_data_path,split_ratio,random_state):
@@ -11,7 +11,7 @@ def split_data(df,train_data_path,test_data_path,split_ratio,random_state):
 
 def split_and_saved_data(config_path):
 
-    config = read_params(config_path)
+    config = read_yaml(config_path)
     process_config = config['processed_data_config']
     data_path = process_config["processed_data_csv"]
     test_data_path = process_config["test_data_csv"] 
@@ -19,8 +19,8 @@ def split_and_saved_data(config_path):
     split_ratio = process_config["train_test_split_ratio"]
     random_state = process_config["random_state"]
 
-    new_data_df = pd.read_csv(data_path)
-    split_data(new_data_df, train_data_path, test_data_path, split_ratio, random_state)
+    new_df = pd.read_csv(data_path)
+    split_data(new_df,train_data_path,test_data_path,split_ratio,random_state)
     
 
 
@@ -30,3 +30,6 @@ if __name__=="__main__":
     args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
     split_and_saved_data(config_path=parsed_args.config)
+
+
+#repro

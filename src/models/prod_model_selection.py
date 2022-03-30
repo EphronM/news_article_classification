@@ -37,9 +37,6 @@ def log_production_model(config_path):
     pd.DataFrame(params).to_json(params_dir)
     pd.DataFrame(score).to_json(score_dir)
 
-    print(params)
-    print(score)
-    
     print("---------------------------------","\n")
     
     client = MlflowClient()
@@ -73,3 +70,5 @@ if __name__ == '__main__':
     args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
     data = log_production_model(config_path=parsed_args.config)
+
+

@@ -20,8 +20,8 @@ stages:
       md5: 97e496bd04df9a513f8d22793b7fc0f1
       size: 3351206
     - path: src/features/build_features.py
-      md5: c6c594a678e54c6fc9c32ce3fb869cc5
-      size: 2075
+      md5: 9a9456c9b0391df72bd669212ad5c7ad
+      size: 2087
     outs:
     - path: data/processed/processed_data.csv
       md5: e1119a547e2432ca933ddba610f39c31
@@ -33,8 +33,8 @@ stages:
       md5: e1119a547e2432ca933ddba610f39c31
       size: 60798178
     - path: src/data/split_data.py
-      md5: 239eefe2bd8c1904298c84adda02f018
-      size: 1232
+      md5: 901184fc5b52c01ba905632455c49564
+      size: 1227
     outs:
     - path: data/processed/news_test.csv
       md5: 3270dbc351824cef94740c6039262dcd
@@ -52,8 +52,8 @@ stages:
       md5: f7071d652d8ce9714d2e190655d1f2d3
       size: 48441472
     - path: src/models/train_model.py
-      md5: 44ac14816951ccdf7754529c00c7c780
-      size: 3195
+      md5: 13579e647a07c580bdc017700ad16830
+      size: 3235
     params:
       params.yaml:
         svm_model.C: 10
@@ -63,8 +63,8 @@ stages:
     cmd: python src/models/prod_model_selection.py --config=params.yaml
     deps:
     - path: src/models/prod_model_selection.py
-      md5: b75101a934df9afc3f5ec7710c9a123b
-      size: 2533
+      md5: df710437e31262e68ea6d8a129ce8122
+      size: 2496
     params:
       params.yaml:
         svm_model.C: 10
@@ -72,5 +72,5 @@ stages:
         svm_model.kernel: rbf
     outs:
     - path: models/model.joblib
-      md5: 85188c638ac008a52c939b55d54a1f97
-      size: 69468592
+      md5: 587851109d4fd5b670ebe8cf8f4dd1a7
+      size: 69489366

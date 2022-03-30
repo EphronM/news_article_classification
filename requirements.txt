@@ -13,3 +13,4 @@ flask
 gunicorn
 mlflow
 nltk
+python-dotenv
