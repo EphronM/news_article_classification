@@ -9,10 +9,13 @@ from prediction_service import prediction
 
 
 
-#webapp_root = "webapp"
+webapp_root = "webapp"
+
+static_dir = os.path.join(webapp_root, 'static')
+template_dir = os.path.join(webapp_root, 'templates')
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=static_dir,template_folder=template_dir)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -23,7 +26,6 @@ def index():
                 response = prediction.form_response(data_req)
                 return render_template('index.html', response = response)
             elif request.json:
-                print('data fetched')
                 response = prediction.api_response(request.json)
   
                 return jsonify(response)
