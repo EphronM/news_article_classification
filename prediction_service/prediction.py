@@ -15,7 +15,6 @@ mapping_path = config['mapping_path']
 
 
 def news_prediction(data):
-    print('Stage 02')
     model = joblib.load(model_dir_path)
     vectorizer = joblib.load(vectorizer_path)
     transformed_data = vectorizer.transform(data).toarray()
@@ -28,7 +27,6 @@ def news_prediction(data):
 def api_response(dict_request):
   try:
     if dict_request:
-      print("stage 01)")
       data = np.array([list(dict_request.values())])
       pred = news_prediction(data[0])
       if len(pred) == 1:
@@ -42,14 +40,12 @@ def api_response(dict_request):
 
 def id_to_category(pred_id):
     pred_category = []
-    print("stage 03")
     id_map = get_maping()
     for id in pred_id:
         pred_category.append(id_map[str(id)])
     return pred_category
 
 def get_maping(json_path = mapping_path):
-    print('stage 04')
     with open(json_path) as json_file:
         map = json.load(json_file)
     return map
