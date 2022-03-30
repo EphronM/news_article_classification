@@ -23,7 +23,9 @@ def index():
                 response = prediction.form_response(data_req)
                 return render_template('index.html', response = response)
             elif request.json:
+                print('data fetched')
                 response = prediction.api_response(request.json)
+  
                 return jsonify(response)
         except:
             pass

@@ -1,5 +1,3 @@
-from unicodedata import category
-import yaml
 import os
 import json
 import joblib
@@ -8,53 +6,50 @@ from src.config import read_yaml
 
 params_path = 'params.yaml'
 
+
 config  = read_yaml(params_path)
 model_dir_path = config['model_webapp_dir']
-vectorizer_path = config['model']['vectorizer_dir']
-#id_mapping = json.load('mapping.json')
+vectorizer_path = config['vectorizer_webapp_dir']
+mapping_path = config['mapping_path']
 
 
 
-def prediction(data):
-  model = joblib.load(model_dir_path)
-  vectorizer = joblib.load(vectorizer_path)
-  print('inside prediction')
+def news_prediction(data):
+    print('Stage 02')
+    model = joblib.load(model_dir_path)
+    vectorizer = joblib.load(vectorizer_path)
+    transformed_data = vectorizer.transform(data).toarray()
 
-  if vectorizer:
-    print('vectorizer exist')
-  
-  try:
-    print('vectorizer started')
-    transformed_data = vectorizer.transform([data])
-    print(transformed_data.shape)
-  except:
-    return "Unexpected result"
-
-  prediction = model.predict(transformed_data)
-  print(prediction)
-  category = id_to_category(prediction)
-  return category
+    pred = model.predict(transformed_data)
+    category = id_to_category(pred)
+    return category
 
 
 def api_response(dict_request):
   try:
     if dict_request:
+      print("stage 01)")
       data = np.array([list(dict_request.values())])
-      print('stage 01')
-      response = prediction(data[0])
-      response = {'response': response}
-      return response
+      pred = news_prediction(data[0])
+      if len(pred) == 1:
+        response = {'response': pred[0]}
+        return response
+      elif len(pred) > 1:
+        response = {'response': pred}
+        return response
   except:
-    print("api responsed with exception")
     pass
 
-def id_to_category(pred_id, pred_category = []):
-  id_mapping = get_maping()
-  for id in pred_id:
-    pred_category.append(id_mapping[id])
-  return pred_category
+def id_to_category(pred_id):
+    pred_category = []
+    print("stage 03")
+    id_map = get_maping()
+    for id in pred_id:
+        pred_category.append(id_map[str(id)])
+    return pred_category
 
-def get_maping(json_path = 'mapping.json'):
+def get_maping(json_path = mapping_path):
+    print('stage 04')
     with open(json_path) as json_file:
         map = json.load(json_file)
     return map

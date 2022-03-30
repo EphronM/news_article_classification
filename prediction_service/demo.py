@@ -13,6 +13,7 @@ params_path = 'params.yaml'
 config  = read_yaml(params_path)
 model_dir_path = config['model_webapp_dir']
 vectorizer_path = config['vectorizer_webapp_dir']
+mapping_path = config['mapping_path']
 #id_mapping = json.load('mapping.json')
 
 
@@ -37,9 +38,9 @@ def news_prediction(data):
 
     print('--------------------------------')
     pred = model.predict(transformed_data)
+    print(pred)
     print('--------------------------------')
 
-    print(pred)
     category = id_to_category(pred)
     return category
 
@@ -57,12 +58,13 @@ def api_response(dict_request):
     pass
 
 def id_to_category(pred_id, pred_category = []):
-  id_mapping = get_maping()
-  for id in pred_id:
-    pred_category.append(id_mapping[id])
-  return pred_category
+    id_map = get_maping()
+    for id in pred_id:
+        pred_category.append(id_map[str(id)])
+    print(pred_category)
+    return pred_category
 
-def get_maping(json_path = 'mapping.json'):
+def get_maping(json_path = mapping_path):
     with open(json_path) as json_file:
         map = json.load(json_file)
     return map
